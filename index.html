@@ -200,13 +200,15 @@ footer { border-top: 1px solid color-mix(in oklab, var(--gold) 35%, transparent)
     margin: 0 auto;
   }
   .hero-card .ribbon {
-    position: static;      /* bukan absolute lagi */
-    display: inline-block; /* tetap terlihat seperti badge */
-    margin-bottom: 12px;   /* beri jarak ke konten bawahnya */
-    padding: 8px 14px;     /* agak lega biar terlihat jelas */
-    font-size: 0.85rem;
-    border-radius: 999px;  /* tetap bentuk kapsul */
-    text-align: center;
+    position: static;       
+    display: block;         /* penuhi 1 baris */
+    width: 100%;            /* sepanjang kartu */
+    margin: 0 0 12px;       /* jarak bawah biar lega */
+    padding: 10px 0;        /* lebih tinggi */
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;     /* teks ditengah */
+    border-radius: 14px 14px 0 0; /* hanya sudut atas */
   }
   /* Grid koleksi & layanan jadi 1 kolom */
   .grid {
@@ -454,6 +456,7 @@ footer { border-top: 1px solid color-mix(in oklab, var(--gold) 35%, transparent)
   </script>
 </body>
 </html>
+
 
 
 
