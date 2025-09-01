@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aurora Batik Studio — Desain Baju & Kerudung</title>
+  <meta name="description" content="Studio desain baju & kerudung bernuansa batik. Koleksi eksklusif, layanan custom, dan lisensi desain untuk brand & butik." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* -----------------------
+   Reset & Base
+----------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color .6s ease, color .6s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  text-decoration: none;
+}
+:root {
+  --bg: #0b0b0f;           
+  --surface: #141419;      
+  --text: #e9e9f0;         
+  --muted: #b3b3c2;        
+  --gold: #d8b26e;         
+  --gold-strong: #f3c97a;  
+  --accent: #8f5f3f;       
+  --ring: rgba(216,178,110,.45);
+  --shadow: 0 20px 50px rgba(0,0,0,.45);
+}
+
+[data-theme="light"] {
+  --bg: #fffaf3;           
+  --surface: #ffffff;      
+  --text: #1e1b16;         
+  --muted: #4e473d;        
+  --gold: #b88a3b;         
+  --gold-strong: #cfa24d;  
+  --accent: #7a4a2f;       
+  --ring: rgba(184,138,59,.35);
+  --shadow: 0 18px 42px rgba(28,20,10,.15);
+}
+
+/* -----------------------
+   Luxury Batik Backdrop
+----------------------- */
+.backdrop {
+  position: fixed; inset: 0; z-index: -2; background: var(--bg);
+  transition: background-color .6s ease, background-image .6s ease, opacity .8s ease;
+}
+.backdrop::before {
+  content: ""; position: absolute; inset: -20vmax; z-index: -2;
+  background: radial-gradient(60vmax 60vmax at 20% 10%, rgba(216,178,110,.12), transparent 60%),
+              radial-gradient(70vmax 70vmax at 80% 20%, rgba(143,95,63,.10), transparent 60%),
+              radial-gradient(80vmax 80vmax at 50% 90%, rgba(216,178,110,.08), transparent 60%);
+  filter: blur(0.6px);
+  transition: opacity .6s ease;
+}
+
+/* Motif batik hanya muncul di light mode */
+[data-theme="light"] .backdrop::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  opacity: 0.25; mix-blend-mode: multiply;
+  background-image: url('data:image/svg+xml;utf8,\
+    <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400">\
+      <defs>\
+        <pattern id="megamendung" patternUnits="userSpaceOnUse" width="220" height="220">\
+          <path d="M30,110 C70,20 150,20 190,110 C150,200 70,200 30,110Z" fill="%23d8b26e" opacity="0.25"/>\
+          <path d="M50,110 C85,55 135,55 170,110 C135,165 85,165 50,110Z" fill="%23cfa24d" opacity="0.35"/>\
+          <path d="M70,110 C95,80 125,80 150,110 C125,140 95,140 70,110Z" fill="none" stroke="%23b88a3b" stroke-width="2" opacity="0.6"/>\
+          <circle cx="110" cy="110" r="8" fill="%23f3c97a" opacity="0.7"/>\
+        </pattern>\
+      </defs>\
+      <rect width="100%" height="100%" fill="url(%23megamendung)" />\
+    </svg>');
+  background-size: 420px 420px;
+  background-repeat: repeat;
+  background-attachment: fixed;
+  animation: floatPattern 80s linear infinite;
+  transition: opacity .8s ease;
+}
+
+@keyframes floatPattern {
+  from { background-position: 0 0; }
+  to { background-position: 800px 800px; }
+}
+
+/* -----------------------
+   Layout
+----------------------- */
+.container { width: min(1200px, 92vw); margin: 0 auto; }
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1200; /* lebih tinggi dari overlay (998) & sidebar (999) */
+  backdrop-filter: blur(8px);
+  background: color-mix(in oklab, var(--bg) 68%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--gold) 35%, transparent);
+  transition: background-color .6s ease, border-color .6s ease;
+
+}
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; flex-wrap: wrap; gap: 12px; }
+
+.brand { display:flex; align-items:center; gap:12px; text-decoration:none; color: var(--text); transition: color .6s ease; }
+.brand-logo { width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, var(--gold), var(--gold-strong)); box-shadow: 0 8px 24px rgba(216,178,110,.35); display:grid; place-items:center; transition: background .6s ease; }
+.brand-logo svg { width:22px; height:22px; fill: #1f1407; opacity: .85; }
+.brand-name { font-family: Marcellus, serif; font-size: 1.2rem; letter-spacing:.6px; }
+
+.nav-links { display:flex; gap: 18px; align-items:center; flex-wrap: wrap; }
+.nav-links a { color: var(--muted); text-decoration:none; font-weight: 500; transition: color .4s ease; }
+.nav-links a:hover { color: var(--gold-strong); }
+
+.toggle {
+  display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--gold) 35%, transparent);
+  background: color-mix(in oklab, var(--surface) 92%, transparent);
+  color: var(--text); cursor:pointer; box-shadow: var(--shadow);
+  transition: background-color .6s ease, border-color .6s ease, color .6s ease;
+}
+.toggle span { font-size:.9rem; color: var(--muted); transition: color .6s ease; }
+
+/* Hero */
+.hero { display:grid; grid-template-columns: 1.15fr 1fr; gap: 36px; align-items:center; padding: 56px 0 32px; }
+.headline { font-family: Marcellus, serif; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.12; margin: 0 0 14px; }
+.sub { color: var(--muted); font-size: clamp(1rem, 1.2vw, 1.1rem); margin-bottom: 22px; }
+.cta { display:flex; gap:12px; flex-wrap: wrap; }
+.btn { appearance:none; border:none; cursor:pointer; padding: 14px 18px; border-radius: 16px; font-weight: 600; letter-spacing:.3px; transition: all .6s ease; }
+.btn-primary { background: linear-gradient(135deg, var(--gold), var(--gold-strong)); color: #2b1d0a; box-shadow: 0 16px 28px rgba(216,178,110,.35); }
+.btn-ghost { background: transparent; color: var(--gold-strong); border: 1px solid color-mix(in oklab, var(--gold) 40%, transparent); }
+
+.hero-card { position:relative; border-radius: 28px; overflow:hidden; background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 92%, transparent), color-mix(in oklab, var(--bg) 92%, transparent)); border: 1px solid color-mix(in oklab, var(--gold) 25%, transparent); box-shadow: var(--shadow); transition: all .6s ease; }
+.hero-card .ribbon { position:absolute; top:18px; right:18px; padding:8px 12px; background: linear-gradient(135deg, var(--gold-strong), var(--gold)); color:#2b1d0a; border-radius: 999px; font-weight:700; font-size:.8rem; letter-spacing:.4px; }
+.mock { aspect-ratio: 4/5; width:100%; background: radial-gradient(140% 100% at 50% 0%, rgba(216,178,110,.25), transparent 45%); }
+
+/* Section Titles */
+.section { padding: 56px 0; }
+.eyebrow { text-transform: uppercase; letter-spacing: .22em; font-size: .78rem; color: var(--gold-strong); font-weight: 700; transition: color .6s ease; }
+.title { font-family: Marcellus, serif; font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 8px 0 12px; transition: color .6s ease; }
+.lead { color: var(--muted); max-width: 60ch; transition: color .6s ease; }
+
+/* Cards */
+.grid { display:grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.card { border: 1px solid color-mix(in oklab, var(--gold) 24%, transparent); background: color-mix(in oklab, var(--surface) 96%, transparent); border-radius: 20px; padding: 18px; box-shadow: var(--shadow); transition: transform .25s ease, background-color .6s ease, border-color .6s ease; }
+.card:hover { transform: translateY(-6px); }
+.card h3 { margin: 10px 0 6px; font-size: 1.1rem; transition: color .6s ease; }
+.badge { display:inline-block; padding:6px 10px; border-radius:999px; font-size:.75rem; background: color-mix(in oklab, var(--gold) 30%, transparent); color: var(--text); border: 1px solid color-mix(in oklab, var(--gold) 45%, transparent); transition: all .6s ease; }
+
+/* Pricing */
+.pricing { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.price-card { border: 1px solid color-mix(in oklab, var(--gold) 28%, transparent); background: color-mix(in oklab, var(--surface) 98%, transparent); border-radius: 22px; padding: 22px; box-shadow: var(--shadow); position: relative; overflow: hidden; transition: all .6s ease; }
+.price-card.best::after { content:"Favorit"; position:absolute; top:14px; right:-38px; transform: rotate(35deg); background: linear-gradient(135deg, var(--gold-strong), var(--gold)); color:#2b1d0a; font-weight:700; padding:8px 60px; }
+.price { font-family: Marcellus, serif; font-size: 2rem; color: var(--gold-strong); transition: color .6s ease; }
+.features { list-style: none; padding: 0; margin: 12px 0; color: var(--muted); transition: color .6s ease; }
+.features li { margin: 8px 0; display:flex; gap:10px; align-items:flex-start; }
+
+/* Contact */
+form { display:grid; gap: 12px; }
+input, textarea { width:100%; padding: 12px 14px; border-radius: 14px; border: 1px solid color-mix(in oklab, var(--gold) 25%, transparent); background: color-mix(in oklab, var(--surface) 96%, transparent); color: var(--text); transition: all .6s ease; }
+input:focus, textarea:focus { outline: 2px solid var(--ring); box-shadow: 0 0 0 4px var(--ring); }
+textarea { min-height: 120px; resize: vertical; }
+
+/* Footer */
+footer { border-top: 1px solid color-mix(in oklab, var(--gold) 35%, transparent); padding: 24px 0 40px; color: var(--muted); transition: all .6s ease; }
+
+/* -----------------------
+   Responsiveness Mobile
+----------------------- */
+/* -----------------------
+   Sidebar Mobile
+----------------------- */
+/* -----------------------
+   Responsive Sidebar Mobile
+----------------------- */
+@media (max-width: 768px) {
+  /* Sembunyikan nav default */
+  .nav-links {
+    display: none;
+  }
+
+  /* Tombol hamburger */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 28px;
+    cursor: pointer;
+  }
+  .hamburger span {
+    display: block;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--gold-strong);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 0; 
+    right: -260px;
+    width: 240px;
+    height: 100vh;
+    background: var(--surface);
+    box-shadow: -6px 0 20px rgba(0,0,0,.3);
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    transition: right 0.4s ease;
+    z-index: 999;
+  }
+  .sidebar a {
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .sidebar a:hover {
+    background: var(--gold);
+    color: #2b1d0a;
+  }
+
+  /* Sidebar aktif */
+  .sidebar.active {
+    right: 0;
+  }
+
+  /* Overlay ketika sidebar muncul */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 998;
+  }
+  .overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* -----------------------
+   Dark Mode Gold Text
+----------------------- */
+[data-theme="dark"] body {
+  color: var(--gold);
+}
+
+[data-theme="dark"] .brand-name,
+[data-theme="dark"] .headline,
+[data-theme="dark"] .title,
+[data-theme="dark"] .nav-links a,
+[data-theme="dark"] .lead,
+[data-theme="dark"] footer {
+  color: var(--gold);
+}
+
+</style>
+
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="brand" aria-label="Aurora Batik Studio">
+      <div class="brand-logo" aria-hidden="true">
+        <!-- Simple flower/batik emblem -->
+        <svg viewBox="0 0 24 24" role="img" aria-label="Logo">
+          <path d="M12 2c2 4 2 16 0 20-2-4-2-16 0-20z"/>
+          <path d="M2 12c4-2 16-2 20 0-4 2-16 2-20 0z"/>
+          <circle cx="12" cy="12" r="2"/>
+        </svg>
+      </div>
+      <span class="brand-name">Aurora Batik Studio</span>
+    </a>
+
+    <!-- Menu utama -->
+    <nav class="nav-links" aria-label="Navigasi utama">
+      <a href="#koleksi">Koleksi</a>
+      <a href="#layanan">Layanan</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+
+    <!-- Toggle tema -->
+    <button class="toggle" id="themeToggle" aria-label="Ganti tema">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 3a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1Zm0 14a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1Zm8-5a1 1 0 0 1 1 1h2a1 1 0 1 1 0 2h-2a1 1 0 1 1-2 0 1 1 0 0 1 1-1ZM3 12a1 1 0 0 1 1-1H2a1 1 0 1 1 0-2h2a1 1 0 1 1 2 0 1 1 0 0 1-1 1Zm13.66 6.66a1 1 0 0 1 1.41 0l1.41 1.41a1 1 0 1 1-1.41 1.41l-1.41-1.41a1 1 0 0 1 0-1.41ZM4.93 6.34a1 1 0 0 1 1.41 0L7.75 7.75a1 1 0 1 1-1.41 1.41L4.93 7.75a1 1 0 0 1 0-1.41Zm12.73-1.41a1 1 0 0 1 0 1.41L16.25 7.75a1 1 0 1 1-1.41-1.41l1.41-1.41a1 1 0 0 1 1.41 0ZM6.34 19.07a1 1 0 0 1 0-1.41l1.41-1.41a1 1 0 0 1 1.41 1.41L7.75 19.07a1 1 0 0 1-1.41 0Z"/>
+      </svg>
+      <span id="themeLabel">Dark</span>
+    </button>
+  </div>
+</header>
+
+
+
+
+  <main>
+    <section class="container hero" aria-labelledby="heroTitle">
+      <div>
+        <h1 id="heroTitle" class="headline">Estetika Batik Modern untuk Brand yang Mewah</h1>
+        <p class="sub">Kami merancang desain baju & kerudung bernuansa batik—eksklusif, relevan tren, dan siap produksi. Tersedia lisensi per desain, bundle koleksi, hingga layanan custom untuk butik & perusahaan.</p>
+        <div class="cta">
+          <a href="#kontak" class="btn btn-primary">Minta Katalog</a>
+          <a href="#koleksi" class="btn btn-ghost">Lihat Koleksi</a>
+        </div>
+      </div>
+      <div class="hero-card" aria-hidden="true">
+        <div class="ribbon">Edisi Ramadan</div>
+        <div class="mock"></div>
+      </div>
+    </section>
+
+    <section id="koleksi" class="container section" aria-labelledby="secKoleksi">
+      <p class="eyebrow">Koleksi</p>
+      <h2 id="secKoleksi" class="title">Motif Pilihan untuk Koleksi Signature</h2>
+      <p class="lead">Pilih lisensi eksklusif atau non-eksklusif. Setiap motif dirancang dengan struktur pattern yang rapi untuk kemudahan produksi kain digital printing maupun batik cap/tulis.</p>
+
+      <div class="grid" style="margin-top: 18px;">
+        <article class="card">
+          <div class="thumb" role="img" aria-label="Motif Parang Emas Modern"></div>
+          <h3>Parang Lux</h3>
+          <span class="badge">Eksklusif</span>
+        </article>
+        <article class="card">
+          <div class="thumb" role="img" aria-label="Motif Kawung Kontemporer"></div>
+          <h3>Kawung Nova</h3>
+          <span class="badge">Bundle 6</span>
+        </article>
+        <article class="card">
+          <div class="thumb" role="img" aria-label="Motif Mega Mendung Minimal"></div>
+          <h3>Mendung Aurelia</h3>
+          <span class="badge">Custom</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="layanan" class="container section" aria-labelledby="secLayanan">
+      <p class="eyebrow">Layanan</p>
+      <h2 id="secLayanan" class="title">Paket Desain untuk Kebutuhan B2B</h2>
+      <p class="lead">Semua paket mencakup file produksi (AI/PSD + repeat pattern), panduan warna, dan hak penggunaan sesuai lisensi.</p>
+
+      <div class="pricing" style="margin-top: 18px;">
+        <div class="price-card">
+          <h3>Lisensi Per Desain</h3>
+          <p class="price">IDR 2.5jt</p>
+          <ul class="features">
+            <li>• 1 motif utama + 2 varian warna</li>
+            <li>• Non-eksklusif</li>
+            <li>• File siap cetak</li>
+          </ul>
+          <button class="btn btn-ghost" onclick="scrollToContact()">Tanya</button>
+        </div>
+        <div class="price-card best">
+          <h3>Bundle Koleksi (6 Desain)</h3>
+          <p class="price">IDR 10jt</p>
+          <ul class="features">
+            <li>• 6 motif kurasi + repeat</li>
+            <li>• 3 palet warna</li>
+            <li>• Lisensi eksklusif per kategori</li>
+          </ul>
+          <button class="btn btn-primary" onclick="scrollToContact()">Ambil Paket</button>
+        </div>
+        <div class="price-card">
+          <h3>Custom untuk Brand</h3>
+          <p class="price">Mulai IDR 4jt</p>
+          <ul class="features">
+            <li>• Riset tren & moodboard</li>
+            <li>• 2–3 iterasi revisi</li>
+            <li>• Eksklusif penuh</li>
+          </ul>
+          <button class="btn btn-ghost" onclick="scrollToContact()">Diskusi Brief</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontak" class="container section" aria-labelledby="secKontak">
+      <p class="eyebrow">Kontak</p>
+      <h2 id="secKontak" class="title">Diskusikan Kebutuhan Desain Anda</h2>
+      <p class="lead">Isi formulir di bawah ini. Kami akan membalas dalam 1×24 jam dengan katalog terbaru dan proposal singkat.</p>
+
+      <div class="grid" style="margin-top: 18px; grid-template-columns: 1.3fr 1fr;">
+        <div class="card">
+          <form onsubmit="handleSubmit(event)">
+            <label>
+              <span>Nama</span>
+              <input required name="name" placeholder="Nama perusahaan atau penanggung jawab" />
+            </label>
+            <label>
+              <span>Email</span>
+              <input required type="email" name="email" placeholder="nama@perusahaan.com" />
+            </label>
+            <label>
+              <span>Pesan</span>
+              <textarea name="message" placeholder="Ceritakan kebutuhan desain Anda (baju/kerudung, tema, kuantitas, timeline)"></textarea>
+            </label>
+            <button class="btn btn-primary" type="submit">Kirim Permintaan</button>
+          </form>
+        </div>
+        <div class="card" aria-label="Info kontak">
+          <h3>Informasi</h3>
+          <p class="lead">Email: halo@aurorabatik.studio<br/>WhatsApp: +62 812-0000-0000</p>
+          <p style="color:var(--muted)">Jam kerja: Senin–Jumat, 09.00–18.00 WIB</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+      <p>© <span id="year"></span> Aurora Batik Studio. Semua hak cipta dilindungi.</p>
+      <p style="color:var(--muted)">Nuansa batik kontemporer dengan sentuhan mewah.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle with localStorage persistence
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('themeToggle');
+    const themeLabel = document.getElementById('themeLabel');
+
+    function setTheme(mode){
+      root.setAttribute('data-theme', mode);
+      localStorage.setItem('theme', mode);
+      themeLabel.textContent = mode === 'dark' ? 'Dark' : 'Light';
+      // Adjust backdrop blend subtly between modes
+      document.querySelector('.backdrop').style.opacity = mode === 'dark' ? '1' : '0.95';
+    }
+
+    // Detect saved or prefers-color-scheme
+    (function initTheme(){
+      const saved = localStorage.getItem('theme');
+      if(saved){ setTheme(saved); }
+      else {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(prefersDark ? 'dark' : 'light');
+      }
+    })();
+
+    toggleBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // Smooth helpers
+    function scrollToContact(){
+      document.getElementById('kontak').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Form mock submit
+    function handleSubmit(e){
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form).entries());
+      alert(`Terima kasih, ${data.name}!\nKami akan mengirim katalog ke ${data.email}.`);
+      form.reset();
+    }
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
